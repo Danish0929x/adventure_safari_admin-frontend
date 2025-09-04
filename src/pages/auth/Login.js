@@ -77,12 +77,12 @@ function Login() {
     <>
       {isPageLoading && <Loader />}
       
-      <div className={`register ${isPageLoading ? 'content-loading' : ''}`}>
-        <div className="register-in max">
-          <div className="register-form">
+      <div className={`login-container ${isPageLoading ? 'content-loading' : ''}`}>
+        <div className="login-inner max-width">
+          <div className="login-form">
             <h2>Admin Login</h2>
             <form onSubmit={handleSubmit}>
-              <div className="form-group">
+              <div className="login-form-group">
                 <label htmlFor="email">
                   <FaEnvelope />
                 </label>
@@ -94,9 +94,10 @@ function Login() {
                   required
                   value={formData.email}
                   onChange={handleChange}
+                  className="login-input"
                 />
               </div>
-              <div className="form-group">
+              <div className="login-form-group">
                 <label htmlFor="password">
                   <FaLock />
                 </label>
@@ -108,17 +109,18 @@ function Login() {
                   required
                   value={formData.password}
                   onChange={handleChange}
+                  className="login-input"
                 />
               </div>
-              <div className="btn-group">
+              <div className="login-btn-group">
                 <button 
                   type="submit" 
                   disabled={isLoading}
-                  className={isLoading ? "loading" : ""}
+                  className={isLoading ? "login-loading" : ""}
                 >
                   {isLoading ? (
                     <>
-                      <FaSpinner className="spin" /> Signing In...
+                      <FaSpinner className="login-spin" /> Signing In...
                     </>
                   ) : (
                     "Sign In"

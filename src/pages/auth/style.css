@@ -1,4 +1,5 @@
-.register {
+/* Login.css */
+.login-container {
   background: url("https://images.unsplash.com/photo-1547471080-7cc2caa01a7e");
   background-position: center;
   background-repeat: no-repeat;
@@ -7,7 +8,7 @@
   padding-top: 100px;
 }
 
-.register-in {
+.login-inner {
   display: flex;
   justify-content: flex-end;
   align-items: top;
@@ -16,20 +17,20 @@
   padding: 20px;
 }
 
-.register-form {
+.login-form {
   padding: 50px 80px;
   background-color: #00000095;
   border-radius: 40px;
 }
 
-.register-form h2 {
+.login-form h2 {
   color: white;
   margin-bottom: 20px;
   font-size: 2rem;
   font-family: var(--font-u);
 }
 
-.form-group {
+.login-form-group {
   background-color: white;
   margin-bottom: 20px;
   padding: 10px 20px;
@@ -40,7 +41,7 @@
   position: relative;
 }
 
-.form-group input {
+.login-input {
   width: 250px;
   border: none;
   outline: none;
@@ -48,65 +49,11 @@
   font-family: var(--font-p);
 }
 
-.form-group label svg {
+.login-form-group label svg {
   color: #473d34;
 }
 
-.password-strength-container {
-  display: flex;
-  width: calc(100% - 10px);
-  margin: auto;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.password-strength {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 4px;
-  width: 50%;
-}
-
-.strength-text {
-  width: 50%;
-}
-
-.strength-text h3 {
-  font-size: 0.8rem;
-  font-weight: 400;
-  font-family: var(--font-p);
-  letter-spacing: 1px;
-}
-
-.strength-bar {
-  height: 4px;
-  width: 30%;
-  flex-grow: 1;
-  background-color: #ddd;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-.strength-bar.weak {
-  background-color: #4caf50;
-}
-
-.strength-bar.medium {
-  background-color: #4caf50;
-}
-
-.strength-bar.strong {
-  background-color: #4caf50;
-}
-
-.strength-text {
-  color: white;
-  font-size: 0.8rem;
-  text-align: left;
-}
-
-.btn-group {
+.login-btn-group {
   display: flex;
   width: 100%;
   padding: 10px 0px;
@@ -114,15 +61,7 @@
   gap: 20px;
 }
 
-.btn-group-2 {
-  display: flex;
-  width: 100%;
-  padding: 10px 0px;
-  justify-content: center;
-  gap: 20px;
-}
-
-.btn-group button, .btn-group-2 button {
+.login-btn-group button {
   padding: 10px 20px;
   border: none;
   outline: none;
@@ -133,7 +72,7 @@
   border: 1px solid white;
 }
 
-.btn-group button.hollow {
+.login-btn-group button.login-hollow {
   padding: 10px 20px;
   border: none;
   outline: none;
@@ -146,7 +85,7 @@
   border: 1px solid white;
 }
 
-.google-btn {
+.login-google-btn {
   padding: 12px;
   border-radius: 8px;
   background: white;
@@ -161,84 +100,56 @@
   transition: all 0.3s ease;
 }
 
-.google-btn:hover {
+.login-google-btn:hover {
   background: #f1f1f1;
 }
 
-.google-icon {
+.login-google-icon {
   font-size: 1.2rem;
 }
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
-  .top-nav{
-    padding: 0;
-  }
-
-  .top-nav-in{
-    display: flex;
-    justify-content: space-between;
-    padding-left: 20px;
-  }
-  .tni-l{
-    font-size: 0.8rem;
-  }
-  .register-form {
+  .login-form {
     padding: 40px 20px;
     width: 100%;
   }
 
-  .register-form h2 {
+  .login-form h2 {
     font-size: 1.5rem;
   }
 
-  .form-group {
+  .login-form-group {
     padding: 10px;
     gap: 10px;
   }
 
-  .form-group input {
+  .login-input {
     width: 100%;
   }
 
-  .password-strength-container {
-    width: 100%;
-    padding: 0 10px;
-  }
-
-  .password-strength {
-    width: 100%;
-    gap: 4px;
-  }
-
-  .btn-group, .btn-group-2 {
+  .login-btn-group {
     flex-direction: column;
     padding: 10px 0;
     gap: 10px;
   }
 
-  .google-btn {
+  .login-google-btn {
     width: 100%;
     justify-content: center;
   }
-  .bni-logo img{
-    width: 140px;
-  }
 }
 
-
 /* Add to your style.css */
-.btn-group button.loading {
+.login-btn-group button.login-loading {
   cursor: not-allowed;
 }
 
-
-
 /* Improved disabled button styles */
-.btn-group button:disabled,
-.btn-group button[disabled],
-.btn-group button.hollow:disabled,
-.btn-group button.hollow[disabled] {
+.login-btn-group button:disabled,
+.login-btn-group button[disabled],
+.login-btn-group button.login-hollow:disabled,
+.login-btn-group button.login-hollow[disabled] {
   opacity: 0.7;
   cursor: not-allowed;
   background-color: rgba(255, 255, 255, 0.3) !important;
@@ -247,62 +158,61 @@
 }
 
 /* Specific style for loading state */
-.btn-group button.loading:disabled {
+.login-btn-group button.login-loading:disabled {
   background-color: rgba(255, 255, 255, 0.1) !important;
   color: white !important;
   border-color: rgba(255, 255, 255, 0.3) !important;
 }
 
 /* Hollow button disabled state */
-.btn-group button.hollow:disabled {
+.login-btn-group button.login-hollow:disabled {
   background-color: transparent !important;
   color: rgba(255, 255, 255, 0.5) !important;
   border-color: rgba(255, 255, 255, 0.3) !important;
 }
 
 /* Spinner color adjustment */
-.spin {
-  animation: spin 1s linear infinite;
+.login-spin {
+  animation: login-spin 1s linear infinite;
   margin-right: 8px;
   color: white; /* Ensure spinner is visible */
 }
 
-@keyframes spin {
+@keyframes login-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-
 /* Verification Message Styles */
-.verification-message {
+.login-verification-message {
   text-align: center;
   padding: 20px;
 }
 
-.success-icon {
+.login-success-icon {
   color: #4CAF50;
   font-size: 3rem;
   margin-bottom: 20px;
 }
 
-.verification-message h2 {
+.login-verification-message h2 {
   margin-bottom: 15px;
   color: #f5f5f5;
 }
 
-.verification-message p {
+.login-verification-message p {
   margin-bottom: 25px;
   color: #d4d4d4;
   line-height: 1.6;
 }
 
-.resend-text {
+.login-resend-text {
   margin-top: 20px;
   font-size: 0.9rem;
   color: #d6d6d6;
 }
 
-.resend-link {
+.login-resend-link {
   background: none;
   border: none;
   color: #0066cc;
@@ -312,6 +222,6 @@
   font-size: 0.9rem;
 }
 
-.resend-link:hover {
+.login-resend-link:hover {
   color: #004499;
 }

@@ -1,0 +1,346 @@
+/* Professional and Clean Styling for New Booking Form */
+
+.new-booking-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header Section */
+.header-section {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 2px solid #6c757d;
+  color: #6c757d;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 16px;
+}
+
+.back-button:hover {
+  background: #6c757d;
+  color: #fff;
+}
+
+.header-section h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+}
+
+.header-section p {
+  font-size: 16px;
+  color: #6c757d;
+  margin: 0;
+}
+
+/* Loading Message */
+.loading-message {
+  text-align: center;
+  padding: 40px;
+  font-size: 16px;
+  color: #6c757d;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+/* Form Container */
+.form-container {
+  background: #fff;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 32px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 40px;
+}
+
+.form-section:last-child {
+  margin-bottom: 0;
+}
+
+.form-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 20px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--secondary-color);;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Form Grid Layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Form Fields */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.form-field input,
+.form-field select {
+  padding: 12px 16px;
+  font-size: 14px;
+  border: 2px solid #ced4da;
+  border-radius: 6px;
+  background: #fff;
+  color: #495057;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  outline: none;
+  border-color: var(--secondary-color);;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.form-field input:hover,
+.form-field select:hover {
+  border-color: #adb5bd;
+}
+
+.form-field input::placeholder {
+  color: #adb5bd;
+}
+
+/* Add Guest Button */
+.add-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--secondary-color);
+  border: 2px solid var(--secondary-color);;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-button:hover {
+  background: var(--secondary-color);;
+  border-color: var(--secondary-color);;
+}
+
+/* Guests Container */
+.guests-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Guest Cards */
+.guest-card {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.guest-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.guest-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.remove-button {
+  background: #dc3545;
+  border: 2px solid #dc3545;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-button:hover {
+  background: #c82333;
+  border-color: #c82333;
+}
+
+/* Guest Form Grid */
+.guest-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 2px solid #e9ecef;
+}
+
+.cancel-button {
+  background: #fff;
+  border: 2px solid #6c757d;
+  color: #6c757d;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-button:hover {
+  background: #6c757d;
+  color: #fff;
+}
+
+.submit-button {
+  background: var(--secondary-color);;
+  border: 2px solid var(--secondary-color);;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 160px;
+  justify-content: center;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: var(--secondary-color);;
+  border-color: var(--secondary-color);;
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .new-booking-container {
+    padding: 16px;
+  }
+
+  .form-container {
+    padding: 24px 20px;
+  }
+
+  .header-section h1 {
+    font-size: 24px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guest-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cancel-button,
+  .submit-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .new-booking-container {
+    padding: 12px;
+  }
+
+  .form-container {
+    padding: 20px 16px;
+  }
+
+  .guest-card {
+    padding: 20px 16px;
+  }
+
+  .header-section h1 {
+    font-size: 22px;
+  }
+
+  .form-field input,
+  .form-field select {
+    padding: 10px 12px;
+  }
+}

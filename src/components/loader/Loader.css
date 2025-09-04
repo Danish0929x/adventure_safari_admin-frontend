@@ -1,0 +1,57 @@
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #443e39; /* Solid white background */
+  z-index: 9999;
+  transition: opacity 0.5s ease-out;
+}
+
+.loader-container.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bouncing-squares {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 60px;
+}
+
+.square {
+  width: 18px;
+  height: 18px;
+  margin: 0 6px;
+  background-color: white;
+  border-radius: 4px;
+  animation: bounce 1.2s infinite ease-in-out;
+}
+
+.square-1 {
+  animation-delay: 0s;
+}
+
+.square-2 {
+  animation-delay: 0.15s;
+}
+
+.square-3 {
+  animation-delay: 0.3s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+    height: 18px;
+  }
+  50% {
+    transform: translateY(-25px);
+    height: 25px;
+  }
+}

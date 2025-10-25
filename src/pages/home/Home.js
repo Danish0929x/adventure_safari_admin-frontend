@@ -1,35 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import './style.css'; // Import the CSS file
+import { getDashboardStats } from "../../services/dashboard";
 
 function Home() {
-  // Sample data for charts
-  const userGrowthData = [
-    { month: 'Jan', users: 120 },
-    { month: 'Feb', users: 180 },
-    { month: 'Mar', users: 240 },
-    { month: 'Apr', users: 320 },
-    { month: 'May', users: 280 },
-    { month: 'Jun', users: 450 },
-    { month: 'Jul', users: 520 }
-  ];
+  const [cardData, setCardData] = useState([
+    { title: "Total Users", value: "0", icon: "👥" },
+    { title: "Users Registered Today", value: "0", icon: "✨" },
+    { title: "Total Bookings", value: "0", icon: "📋" },
+    { title: "Today's Bookings", value: "0", icon: "📅" }
+  ]);
 
-  const bookingData = [
-    { day: 'Mon', bookings: 15 },
-    { day: 'Tue', bookings: 23 },
-    { day: 'Wed', bookings: 18 },
-    { day: 'Thu', bookings: 32 },
-    { day: 'Fri', bookings: 28 },
-    { day: 'Sat', bookings: 42 },
-    { day: 'Sun', bookings: 35 }
-  ];
+  const [userGrowthData, setUserGrowthData] = useState([]);
+  const [bookingData, setBookingData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const cardData = [
-    { title: "Total Users", value: "1,247", icon: "👥" },
-    { title: "Users Registered Today", value: "23", icon: "✨" },
-    { title: "Total Bookings", value: "3,892", icon: "📋" },
-    { title: "Today's Bookings", value: "47", icon: "📅" }
-  ];
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true);
+        const data = await getDashboardStats();
+
+        setCardData(data.cardData);
+        setUserGrowthData(data.userGrowthData);
+        setBookingData(data.weeklyBookingsData);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching dashboard data:", err);
+        setError(err.message || "Failed to load dashboard data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="dashboard-container">
+        <div className="dashboard-header">
+          <h1 className="dashboard-title">Dashboard</h1>
+          <p className="dashboard-subtitle">Loading dashboard data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="dashboard-container">
+        <div className="dashboard-header">
+          <h1 className="dashboard-title">Dashboard</h1>
+          <p className="dashboard-subtitle" style={{ color: 'red' }}>Error: {error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-container">

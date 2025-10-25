@@ -38,6 +38,13 @@ const Users = () => {
       accessor: 'email',
     },
     {
+      Header: 'Bookings',
+      accessor: 'bookingCount',
+      Cell: ({ value }) => (
+        <span className="booking-count">{value || 0}</span>
+      ),
+    },
+    {
       Header: 'Verified',
       accessor: 'isVerified',
       Cell: ({ value }) => (

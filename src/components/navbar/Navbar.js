@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Phone, UserCircle, LogOut, Menu, X, ChevronDown, Gauge, Settings, User, History, HelpCircle, FileText, BookAIcon, ListOrdered } from "lucide-react";
+import { Phone, UserCircle, LogOut, Menu, X, ChevronDown, Gauge, Settings, User, History, HelpCircle, FileText, BookAIcon, ListOrdered, MapPin } from "lucide-react";
 import { useNavigate, useLocation } from 'react-router-dom'; // Add this import for React Router
 import "./style.css";
 import logo from "../../assets/logo/logo-main.webp";
@@ -26,6 +26,7 @@ function Navbar() {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Gauge, path: '/dashboard' },
     { id: 'users', label: 'Users', icon: User, path: '/dashboard/users' },
+        { id: 'trips', label: 'Trips', icon: MapPin, path: '/dashboard/trips' },
     { id: 'bookings', label: 'Bookings', icon: ListOrdered, path: '/dashboard/bookings' },
   ];
 

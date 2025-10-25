@@ -23,6 +23,7 @@ const Bookings = () => {
       setLoading(true);
       setError('');
       const bookingsData = await getAllBookings();
+      console.log('Fetched bookings:', bookingsData); // Debug log
       setBookings(bookingsData);
       
       // Calculate statistics
@@ -37,21 +38,30 @@ const Bookings = () => {
 
   // Calculate booking statistics
   const calculateStats = (bookingsData) => {
+    // Count confirmed bookings (case-insensitive)
     const confirmed = bookingsData.filter(booking => 
-      booking.bookingStatus === 'Confirmed' || booking.status === 'confirmed'
+      booking.bookingStatus?.toLowerCase() === 'confirmed'
     ).length;
     
+    // Count pending bookings (case-insensitive)
     const pending = bookingsData.filter(booking => 
-      booking.bookingStatus === 'Pending' || booking.status === 'pending'
+      booking.bookingStatus?.toLowerCase() === 'pending'
     ).length;
     
+    // Count cancelled bookings (case-insensitive)
     const cancelled = bookingsData.filter(booking => 
-      booking.bookingStatus === 'Cancelled' || booking.status === 'cancelled'
+      booking.bookingStatus?.toLowerCase() === 'cancelled'
     ).length;
     
+    // Calculate revenue from registration payments
     const revenue = bookingsData.reduce((total, booking) => {
-      if (booking.bookingStatus !== 'Cancelled' && booking.status !== 'cancelled') {
-        return total + (booking.totalAmount || 0);
+      // Only count if booking is not cancelled
+      if (booking.bookingStatus?.toLowerCase() !== 'cancelled') {
+        // Add registration payment amount if it exists and is paid
+        if (booking.registrationPaymentDetails?.amount && 
+            booking.registrationPaymentDetails?.status === 'paid') {
+          return total + booking.registrationPaymentDetails.amount;
+        }
       }
       return total;
     }, 0);
@@ -72,26 +82,35 @@ const Bookings = () => {
   // Define table columns
   const columns = useMemo(() => [
     {
+      Header: 'Booking ID',
+      accessor: 'bookingId',
+      Cell: ({ value }) => value || 'N/A',
+    },
+    {
       Header: 'Customer Name',
-      accessor: row => row.userId?.name || row.customerName || 'N/A',
+      accessor: row => row.userId?.name || 'N/A',
+    },
+    {
+      Header: 'Email',
+      accessor: row => row.userId?.email || 'N/A',
     },
     {
       Header: 'Trip',
-      accessor: row => row.tripId?.name || row.service || 'N/A',
+      accessor: row => row.tripId?.name || 'Trip Deleted',
     },
     {
       Header: 'Destination',
       accessor: row => row.tripId?.destination || 'N/A',
     },
     {
-      Header: 'Travel Date',
-      accessor: 'travelDate',
+      Header: 'Booking Date',
+      accessor: 'bookingDate',
       Cell: ({ value }) => value ? new Date(value).toLocaleDateString() : 'N/A',
     },
     {
       Header: 'Guests',
       accessor: 'guests',
-      Cell: ({ value }) => Array.isArray(value) ? value.length : value || 0,
+      Cell: ({ value }) => Array.isArray(value) ? value.length : 0,
     },
     {
       Header: 'Status',
@@ -124,16 +143,29 @@ const Bookings = () => {
       },
     },
     {
-      Header: 'Total Amount',
-      accessor: 'totalAmount',
-      Cell: ({ value }) => `$${value || 0}`,
+      Header: 'Payment Status',
+      accessor: 'paymentStatus',
+      Cell: ({ value }) => (
+        <span className={`payment-badge ${value?.toLowerCase()}`}>
+          {value || 'Pending'}
+        </span>
+      ),
     },
     {
-      Header: 'Booked On',
+      Header: 'Registration Fee',
+      accessor: row => row.registrationPaymentDetails?.amount || 0,
+      Cell: ({ value }) => `$${value}`,
+    },
+    {
+      Header: 'Trip Price',
+      accessor: row => row.tripId?.price || 0,
+      Cell: ({ value }) => `$${value}`,
+    },
+    {
+      Header: 'Created On',
       accessor: 'createdAt',
       Cell: ({ value }) => value ? new Date(value).toLocaleDateString() : 'N/A',
     },
-
   ], []);
 
   const handleNewBooking = () => {
@@ -177,9 +209,8 @@ const Bookings = () => {
             <h1>Booking Management</h1>
             <p>View and manage all customer bookings</p>
           </div>
-          <button className="new-booking-btn" onClick={handleNewBooking}>
-            <span className="icon">+</span>
-            New Booking
+          <button onClick={handleNewBooking} className="new-booking-btn">
+            + New Booking
           </button>
         </div>
       </div>

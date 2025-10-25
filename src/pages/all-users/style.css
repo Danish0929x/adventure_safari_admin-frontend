@@ -55,6 +55,20 @@
   color: #ff9500;
 }
 
+/* Booking count styling */
+.booking-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  padding: 4px 10px;
+  background-color: #e8f4ff;
+  color: #0066cc;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
 /* Table styling */
 .table-div {
   width: 100%;

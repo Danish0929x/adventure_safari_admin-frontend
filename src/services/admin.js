@@ -33,7 +33,7 @@ const makeAuthenticatedRequest = async (url, options = {}) => {
 };
 
 // API base URL (adjust according to your backend URL)
-const API_BASE_URL = 'https://adventure-safari-admin-backend2-1.onrender.com';
+const API_BASE_URL = 'https://adventure-safari-admin-backend2-1.onrender.com/api';
 // const API_BASE_URL = 'http://localhost:5000/api';
 
 // Admin service functions

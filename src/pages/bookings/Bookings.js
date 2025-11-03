@@ -1,36 +1,36 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import CustomTable from '../../components/custome-table/CustomTable';
-import { getAllBookings } from '../../services/admin';
-import './Bookings.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useMemo, useEffect } from "react";
+import CustomTable from "../../components/custome-table/CustomTable";
+import { getAllBookings } from "../../services/admin";
+import "./Bookings.css";
+import { useNavigate } from "react-router-dom";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [stats, setStats] = useState({
     confirmed: 0,
     pending: 0,
     cancelled: 0,
-    revenue: 0
+    revenue: 0,
   });
-  
+
   const navigate = useNavigate();
 
   // Fetch bookings from API
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      setError('');
+      setError("");
       const bookingsData = await getAllBookings();
-      console.log('Fetched bookings:', bookingsData); // Debug log
+      console.log("Fetched bookings:", bookingsData); // Debug log
       setBookings(bookingsData);
-      
+
       // Calculate statistics
       calculateStats(bookingsData);
     } catch (err) {
       setError(err.message);
-      console.error('Error fetching bookings:', err);
+      console.error("Error fetching bookings:", err);
     } finally {
       setLoading(false);
     }
@@ -39,27 +39,29 @@ const Bookings = () => {
   // Calculate booking statistics
   const calculateStats = (bookingsData) => {
     // Count confirmed bookings (case-insensitive)
-    const confirmed = bookingsData.filter(booking => 
-      booking.bookingStatus?.toLowerCase() === 'confirmed'
+    const confirmed = bookingsData.filter(
+      (booking) => booking.bookingStatus?.toLowerCase() === "confirmed"
     ).length;
-    
+
     // Count pending bookings (case-insensitive)
-    const pending = bookingsData.filter(booking => 
-      booking.bookingStatus?.toLowerCase() === 'pending'
+    const pending = bookingsData.filter(
+      (booking) => booking.bookingStatus?.toLowerCase() === "pending"
     ).length;
-    
+
     // Count cancelled bookings (case-insensitive)
-    const cancelled = bookingsData.filter(booking => 
-      booking.bookingStatus?.toLowerCase() === 'cancelled'
+    const cancelled = bookingsData.filter(
+      (booking) => booking.bookingStatus?.toLowerCase() === "cancelled"
     ).length;
-    
+
     // Calculate revenue from registration payments
     const revenue = bookingsData.reduce((total, booking) => {
       // Only count if booking is not cancelled
-      if (booking.bookingStatus?.toLowerCase() !== 'cancelled') {
+      if (booking.bookingStatus?.toLowerCase() !== "cancelled") {
         // Add registration payment amount if it exists and is paid
-        if (booking.registrationPaymentDetails?.amount && 
-            booking.registrationPaymentDetails?.status === 'paid') {
+        if (
+          booking.registrationPaymentDetails?.amount &&
+          booking.registrationPaymentDetails?.status === "paid"
+        ) {
           return total + booking.registrationPaymentDetails.amount;
         }
       }
@@ -80,96 +82,114 @@ const Bookings = () => {
   };
 
   // Define table columns
-  const columns = useMemo(() => [
-    {
-      Header: 'Booking ID',
-      accessor: 'bookingId',
-      Cell: ({ value }) => value || 'N/A',
-    },
-    {
-      Header: 'Customer Name',
-      accessor: row => row.userId?.name || 'N/A',
-    },
-    {
-      Header: 'Email',
-      accessor: row => row.userId?.email || 'N/A',
-    },
-    {
-      Header: 'Trip',
-      accessor: row => row.tripId?.name || 'Trip Deleted',
-    },
-    {
-      Header: 'Destination',
-      accessor: row => row.tripId?.destination || 'N/A',
-    },
-    {
-      Header: 'Booking Date',
-      accessor: 'bookingDate',
-      Cell: ({ value }) => value ? new Date(value).toLocaleDateString() : 'N/A',
-    },
-    {
-      Header: 'Guests',
-      accessor: 'guests',
-      Cell: ({ value }) => Array.isArray(value) ? value.length : 0,
-    },
-    {
-      Header: 'Status',
-      accessor: 'bookingStatus',
-      Cell: ({ value }) => {
-        const status = value?.toLowerCase() || 'pending';
-        let progress = 0;
-        
-        if (status === 'pending') {
-          progress = getRandomProgress();
-        } else if (status === 'confirmed') {
-          progress = 100;
-        } else if (status === 'cancelled') {
-          progress = 0;
-        }
-        
-        return (
-          <div className="status-container">
-            <div className="status-progress-bar">
-              <div 
-                className={`progress-fill ${status}`}
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-            <span className={`status-text ${status}`}>
-              {value || 'Pending'} ({progress}%)
-            </span>
-          </div>
-        );
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Booking ID",
+        accessor: "bookingId",
+        Cell: ({ value }) => value || "N/A",
       },
-    },
-    {
-      Header: 'Payment Status',
-      accessor: 'paymentStatus',
-      Cell: ({ value }) => (
-        <span className={`payment-badge ${value?.toLowerCase()}`}>
-          {value || 'Pending'}
-        </span>
-      ),
-    },
-    {
-      Header: 'Registration Fee',
-      accessor: row => row.registrationPaymentDetails?.amount || 0,
-      Cell: ({ value }) => `$${value}`,
-    },
-    {
-      Header: 'Trip Price',
-      accessor: row => row.tripId?.price || 0,
-      Cell: ({ value }) => `$${value}`,
-    },
-    {
-      Header: 'Created On',
-      accessor: 'createdAt',
-      Cell: ({ value }) => value ? new Date(value).toLocaleDateString() : 'N/A',
-    },
-  ], []);
+      {
+        Header: "Customer Name",
+        accessor: (row) => row.userId?.name || "N/A",
+      },
+      {
+        Header: "Email",
+        accessor: (row) => row.userId?.email || "N/A",
+      },
+      {
+        Header: "Trip",
+        accessor: (row) => row.tripId?.name || "Trip Deleted",
+      },
+      {
+        Header: "View",
+        accessor: "_id",
+        Cell: ({ value }) => (
+          <button
+            className="action-btn view"
+            onClick={() => navigate(`/dashboard/booking-details/${value}`)}
+            title="View Details"
+          >
+            <span className="icon">View</span>
+          </button>
+        ),
+      },
+      {
+        Header: "Destination",
+        accessor: (row) => row.tripId?.destination || "N/A",
+      },
+      {
+        Header: "Booking Date",
+        accessor: "bookingDate",
+        Cell: ({ value }) =>
+          value ? new Date(value).toLocaleDateString() : "N/A",
+      },
+      {
+        Header: "Guests",
+        accessor: "guests",
+        Cell: ({ value }) => (Array.isArray(value) ? value.length : 0),
+      },
+      {
+        Header: "Status",
+        accessor: "bookingStatus",
+        Cell: ({ value }) => {
+          const status = value?.toLowerCase() || "pending";
+          let progress = 0;
+
+          if (status === "pending") {
+            progress = getRandomProgress();
+          } else if (status === "confirmed") {
+            progress = 100;
+          } else if (status === "cancelled") {
+            progress = 0;
+          }
+
+          return (
+            <div className="status-container">
+              <div className="status-progress-bar">
+                <div
+                  className={`progress-fill ${status}`}
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+              <span className={`status-text ${status}`}>
+                {value || "Pending"} ({progress}%)
+              </span>
+            </div>
+          );
+        },
+      },
+      {
+        Header: "Payment Status",
+        accessor: "paymentStatus",
+        Cell: ({ value }) => (
+          <span className={`payment-badge ${value?.toLowerCase()}`}>
+            {value || "Pending"}
+          </span>
+        ),
+      },
+      {
+        Header: "Registration Fee",
+        accessor: (row) => row.registrationPaymentDetails?.amount || 0,
+        Cell: ({ value }) => `$${value}`,
+      },
+      {
+        Header: "Trip Price",
+        accessor: (row) => row.tripId?.price || 0,
+        Cell: ({ value }) => `$${value}`,
+      },
+      {
+        Header: "Created On",
+        accessor: "createdAt",
+        Cell: ({ value }) =>
+          value ? new Date(value).toLocaleDateString() : "N/A",
+      },
+    ],
+    [navigate]
+  );
 
   const handleNewBooking = () => {
-    navigate('/dashboard/new-booking');
+    navigate("/dashboard/new-booking");
   };
 
   if (loading) {
@@ -214,7 +234,7 @@ const Bookings = () => {
           </button>
         </div>
       </div>
-      
+
       <div className="bookings-content">
         <div className="bookings-stats">
           <div className="stat-card">

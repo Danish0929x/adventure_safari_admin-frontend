@@ -7,6 +7,7 @@ import Loader from "../../components/loader/Loader";
 import Users from "../all-users/Users";
 import Bookings from "../bookings/Bookings";
 import NewBooking from "../bookings/NewBooking";
+import ViewBooking from "../bookings/ViewBooking";
 import Trips from "../trips/Trips";
 import TripForm from "../trips/TripForm";
 import TripDetail from "../trips/TripDetail";
@@ -36,6 +37,7 @@ function Dashboard() {
             <Route path="/users" element={<Users />} />
             <Route path="/bookings" element={<Bookings />} />
             <Route path="/new-booking" element={<NewBooking />} />
+            <Route path="/booking-details/:id" element={<ViewBooking />} />
             <Route path="/trips" element={<Trips />} />
             <Route path="/trips/new" element={<TripForm />} />
             <Route path="/trips/edit/:id" element={<TripForm />} />

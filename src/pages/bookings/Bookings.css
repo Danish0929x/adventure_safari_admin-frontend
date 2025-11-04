@@ -168,6 +168,7 @@
 }
 
 /* Action buttons */
+/* Action buttons */
 .action-buttons {
   display: flex;
   gap: 8px;
@@ -186,13 +187,21 @@
   justify-content: center;
 }
 
-.view {
-  padding: 5px 30px;
+.action-btn .icon {
+  font-size: 1.1rem;
+  color: inherit; /* inherit from .action-btn.view color */
 }
 
+/* Make view icon more visible */
 .action-btn.view {
-  color: var(--info);
-  background-color: rgba(23, 162, 184, 0.1);
+  color: #0d6efd; /* strong blue */
+  background-color: rgba(13, 110, 253, 0.1);
+}
+
+.action-btn.view:hover {
+  background-color: rgba(13, 110, 253, 0.2);
+  color: #0a58ca;
+  transform: scale(1.1);
 }
 
 .action-btn.edit {

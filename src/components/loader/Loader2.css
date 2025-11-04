@@ -1,0 +1,74 @@
+/* ✅ Base Loader2 Styling */
+.loader2-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(230, 230, 230, 0.7); /* A soft, semi-transparent light gray */
+  z-index: 9999;
+  transition: opacity 0.5s ease-out;
+}
+
+/* ✅ For in-page overlay (less opaque) */
+.loader2-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent; /* semi-transparent white */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radius);
+  z-index: 10;
+}
+
+.loader2-container.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ✅ Animation squares */
+.loader2-bouncing-squares {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 60px;
+}
+
+.loader2-square {
+  width: 18px;
+  height: 18px;
+  margin: 0 6px;
+  background-color: #443e39;
+  border-radius: 4px;
+  animation: loader2-bounce 1.2s infinite ease-in-out;
+}
+
+.loader2-square-1 {
+  animation-delay: 0s;
+}
+
+.loader2-square-2 {
+  animation-delay: 0.15s;
+}
+
+.loader2-square-3 {
+  animation-delay: 0.3s;
+}
+
+@keyframes loader2-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    height: 18px;
+  }
+  50% {
+    transform: translateY(-25px);
+    height: 25px;
+  }
+}

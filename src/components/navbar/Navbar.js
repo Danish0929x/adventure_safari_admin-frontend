@@ -1,6 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Phone, UserCircle, LogOut, Menu, X, ChevronDown, Gauge, Settings, User, History, HelpCircle, FileText, BookAIcon, ListOrdered, MapPin } from "lucide-react";
-import { useNavigate, useLocation } from 'react-router-dom'; // Add this import for React Router
+import {
+  Phone,
+  UserCircle,
+  LogOut,
+  Menu,
+  X,
+  ChevronDown,
+  Gauge,
+  Settings,
+  User,
+  History,
+  HelpCircle,
+  FileText,
+  BookAIcon,
+  ListOrdered,
+  MapPin,
+  Megaphone,
+} from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./style.css";
 import logo from "../../assets/logo/logo-main.webp";
 
@@ -16,18 +33,32 @@ function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPage = location.pathname;
-  
-  const isAuthPage = currentPage === "/login" || currentPage === "/register" || currentPage === "/";
+
+  const isAuthPage =
+    currentPage === "/login" ||
+    currentPage === "/register" ||
+    currentPage === "/";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   // Menu items that you can easily expand
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: Gauge, path: '/dashboard' },
-    { id: 'users', label: 'Users', icon: User, path: '/dashboard/users' },
-        { id: 'trips', label: 'Trips', icon: MapPin, path: '/dashboard/trips' },
-    { id: 'bookings', label: 'Bookings', icon: ListOrdered, path: '/dashboard/bookings' },
+    { id: "dashboard", label: "Dashboard", icon: Gauge, path: "/dashboard" },
+    { id: "users", label: "Users", icon: User, path: "/dashboard/users" },
+    { id: "trips", label: "Trips", icon: MapPin, path: "/dashboard/trips" },
+    {
+      id: "bookings",
+      label: "Bookings",
+      icon: ListOrdered,
+      path: "/dashboard/bookings",
+    },
+    {
+      id: "announcements",
+      label: "Announcements",
+      icon: Megaphone,
+      path: "/dashboard/announcements",
+    },
   ];
 
   const handleLogout = () => {
@@ -38,12 +69,12 @@ function Navbar() {
   };
 
   const handleMobileMenuToggle = () => {
-    setMobileMenuOpen(prev => !prev);
+    setMobileMenuOpen((prev) => !prev);
     if (dropdownOpen) setDropdownOpen(false);
   };
 
   const handleDropdownToggle = () => {
-    setDropdownOpen(prev => !prev);
+    setDropdownOpen((prev) => !prev);
   };
 
   const handleMenuItemClick = (path) => {
@@ -54,7 +85,7 @@ function Navbar() {
   };
 
   const handleProfileClick = () => {
-    navigate('/profile');
+    navigate("/profile");
   };
 
   // Close dropdown when clicking outside
@@ -65,8 +96,8 @@ function Navbar() {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // Close mobile menu when screen size changes
@@ -77,8 +108,8 @@ function Navbar() {
       }
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
@@ -86,10 +117,10 @@ function Navbar() {
       <div className="navbar-container">
         {/* Logo */}
         <div className="navbar-brand">
-          <button 
-            onClick={() => navigate('/dashboard')} 
+          <button
+            onClick={() => navigate("/dashboard")}
             className="brand-link"
-            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+            style={{ background: "none", border: "none", cursor: "pointer" }}
           >
             <LogoComponent />
           </button>
@@ -100,16 +131,18 @@ function Navbar() {
           <div className="navbar-nav desktop-nav">
             {/* Menu Dropdown */}
             <div className="nav-dropdown" ref={dropdownRef}>
-              <button 
+              <button
                 className="nav-dropdown-toggle"
                 onClick={handleDropdownToggle}
                 aria-expanded={dropdownOpen}
               >
                 <Menu className="nav-icon" />
                 <span>Menu</span>
-                <ChevronDown className={`chevron ${dropdownOpen ? 'open' : ''}`} />
+                <ChevronDown
+                  className={`chevron ${dropdownOpen ? "open" : ""}`}
+                />
               </button>
-              
+
               {dropdownOpen && (
                 <div className="dropdown-menu">
                   {menuItems.map((item) => {
@@ -118,7 +151,7 @@ function Navbar() {
                     return (
                       <button
                         key={item.id}
-                        className={`dropdown-item ${isActive ? 'active' : ''}`}
+                        className={`dropdown-item ${isActive ? "active" : ""}`}
                         onClick={() => handleMenuItemClick(item.path)}
                       >
                         <IconComponent className="dropdown-icon" />
@@ -132,14 +165,11 @@ function Navbar() {
 
             {/* Profile & Logout */}
             <div className="nav-actions">
-              <button 
-                className="nav-btn profile-btn" 
-                onClick={handleProfileClick}
-                title="Profile"
+              <button
+                className="nav-btn logout-btn"
+                onClick={handleLogout}
+                title="Logout"
               >
-                <UserCircle className="nav-icon" />
-              </button>
-              <button className="nav-btn logout-btn" onClick={handleLogout} title="Logout">
                 <LogOut className="nav-icon" />
               </button>
             </div>
@@ -148,7 +178,7 @@ function Navbar() {
 
         {/* Mobile Menu Toggle */}
         {!isAuthPage && (
-          <button 
+          <button
             className="mobile-menu-toggle"
             onClick={handleMobileMenuToggle}
             aria-expanded={mobileMenuOpen}
@@ -171,7 +201,7 @@ function Navbar() {
                 return (
                   <button
                     key={item.id}
-                    className={`mobile-menu-item ${isActive ? 'active' : ''}`}
+                    className={`mobile-menu-item ${isActive ? "active" : ""}`}
                     onClick={() => handleMenuItemClick(item.path)}
                   >
                     <IconComponent className="mobile-menu-icon" />
@@ -184,14 +214,17 @@ function Navbar() {
             {/* Mobile Actions */}
             <div className="mobile-menu-section">
               <h3 className="mobile-menu-title">Account</h3>
-              <button 
-                className="mobile-menu-item" 
-                onClick={() => handleMenuItemClick('/profile')}
+              <button
+                className="mobile-menu-item"
+                onClick={() => handleMenuItemClick("/profile")}
               >
                 <UserCircle className="mobile-menu-icon" />
                 <span>Profile</span>
               </button>
-              <button className="mobile-menu-item logout" onClick={handleLogout}>
+              <button
+                className="mobile-menu-item logout"
+                onClick={handleLogout}
+              >
                 <LogOut className="mobile-menu-icon" />
                 <span>Logout</span>
               </button>

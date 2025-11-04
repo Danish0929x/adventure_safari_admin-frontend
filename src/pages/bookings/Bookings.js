@@ -3,6 +3,17 @@ import CustomTable from "../../components/custome-table/CustomTable";
 import { getAllBookings } from "../../services/admin";
 import "./Bookings.css";
 import { useNavigate } from "react-router-dom";
+import Loader2 from "../../components/loader/Loader2";
+
+// ✅ React Icons
+import {
+  FaCheckCircle,
+  FaHourglassHalf,
+  FaTimesCircle,
+  FaDollarSign,
+  FaPlus,
+} from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -23,7 +34,7 @@ const Bookings = () => {
       setLoading(true);
       setError("");
       const bookingsData = await getAllBookings();
-      console.log("Fetched bookings:", bookingsData); // Debug log
+      console.log("Fetched bookings:", bookingsData);
       setBookings(bookingsData);
 
       // Calculate statistics
@@ -38,31 +49,25 @@ const Bookings = () => {
 
   // Calculate booking statistics
   const calculateStats = (bookingsData) => {
-    // Count confirmed bookings (case-insensitive)
     const confirmed = bookingsData.filter(
-      (booking) => booking.bookingStatus?.toLowerCase() === "confirmed"
+      (b) => b.bookingStatus?.toLowerCase() === "confirmed"
     ).length;
 
-    // Count pending bookings (case-insensitive)
     const pending = bookingsData.filter(
-      (booking) => booking.bookingStatus?.toLowerCase() === "pending"
+      (b) => b.bookingStatus?.toLowerCase() === "pending"
     ).length;
 
-    // Count cancelled bookings (case-insensitive)
     const cancelled = bookingsData.filter(
-      (booking) => booking.bookingStatus?.toLowerCase() === "cancelled"
+      (b) => b.bookingStatus?.toLowerCase() === "cancelled"
     ).length;
 
-    // Calculate revenue from registration payments
-    const revenue = bookingsData.reduce((total, booking) => {
-      // Only count if booking is not cancelled
-      if (booking.bookingStatus?.toLowerCase() !== "cancelled") {
-        // Add registration payment amount if it exists and is paid
+    const revenue = bookingsData.reduce((total, b) => {
+      if (b.bookingStatus?.toLowerCase() !== "cancelled") {
         if (
-          booking.registrationPaymentDetails?.amount &&
-          booking.registrationPaymentDetails?.status === "paid"
+          b.registrationPaymentDetails?.amount &&
+          b.registrationPaymentDetails?.status === "paid"
         ) {
-          return total + booking.registrationPaymentDetails.amount;
+          return total + b.registrationPaymentDetails.amount;
         }
       }
       return total;
@@ -75,13 +80,12 @@ const Bookings = () => {
     fetchBookings();
   }, []);
 
-  // Function to generate random progress for pending status (multiple of 20)
   const getRandomProgress = () => {
-    const progressOptions = [20, 40, 60, 80];
-    return progressOptions[Math.floor(Math.random() * progressOptions.length)];
+    const options = [20, 40, 60, 80];
+    return options[Math.floor(Math.random() * options.length)];
   };
 
-  // Define table columns
+  // ✅ Define table columns
   const columns = useMemo(
     () => [
       {
@@ -89,18 +93,9 @@ const Bookings = () => {
         accessor: "bookingId",
         Cell: ({ value }) => value || "N/A",
       },
-      {
-        Header: "Customer Name",
-        accessor: (row) => row.userId?.name || "N/A",
-      },
-      {
-        Header: "Email",
-        accessor: (row) => row.userId?.email || "N/A",
-      },
-      {
-        Header: "Trip",
-        accessor: (row) => row.tripId?.name || "Trip Deleted",
-      },
+      { Header: "Customer Name", accessor: (row) => row.userId?.name || "N/A" },
+      { Header: "Email", accessor: (row) => row.userId?.email || "N/A" },
+      { Header: "Trip", accessor: (row) => row.tripId?.name || "Trip Deleted" },
       {
         Header: "View",
         accessor: "_id",
@@ -110,7 +105,7 @@ const Bookings = () => {
             onClick={() => navigate(`/dashboard/booking-details/${value}`)}
             title="View Details"
           >
-            <span className="icon">View</span>
+            <FaEye size={18} />
           </button>
         ),
       },
@@ -136,13 +131,9 @@ const Bookings = () => {
           const status = value?.toLowerCase() || "pending";
           let progress = 0;
 
-          if (status === "pending") {
-            progress = getRandomProgress();
-          } else if (status === "confirmed") {
-            progress = 100;
-          } else if (status === "cancelled") {
-            progress = 0;
-          }
+          if (status === "pending") progress = getRandomProgress();
+          else if (status === "confirmed") progress = 100;
+          else if (status === "cancelled") progress = 0;
 
           return (
             <div className="status-container">
@@ -188,18 +179,17 @@ const Bookings = () => {
     [navigate]
   );
 
-  const handleNewBooking = () => {
-    navigate("/dashboard/new-booking");
-  };
+  const handleNewBooking = () => navigate("/dashboard/new-booking");
 
   if (loading) {
     return (
       <div className="bookings-container">
         <div className="bookings-header">
           <h1>Booking Management</h1>
-          <p>View and manage all customer bookings</p>
         </div>
-        <div className="loading">Loading bookings...</div>
+        <div className="loading">
+          <Loader2 />
+        </div>
       </div>
     );
   }
@@ -230,43 +220,47 @@ const Bookings = () => {
             <p>View and manage all customer bookings</p>
           </div>
           <button onClick={handleNewBooking} className="new-booking-btn">
-            + New Booking
+            <FaPlus size={16} /> New Booking
           </button>
         </div>
       </div>
 
       <div className="bookings-content">
+        {/* ✅ Stats Section */}
         <div className="bookings-stats">
           <div className="stat-card">
             <div className="stat-icon confirmed">
-              <span className="icon">✓</span>
+              <FaCheckCircle />
             </div>
             <div className="stat-info">
               <h3>{stats.confirmed}</h3>
               <p>Confirmed Bookings</p>
             </div>
           </div>
+
           <div className="stat-card">
             <div className="stat-icon pending">
-              <span className="icon">⏱️</span>
+              <FaHourglassHalf />
             </div>
             <div className="stat-info">
               <h3>{stats.pending}</h3>
               <p>Pending Bookings</p>
             </div>
           </div>
+
           <div className="stat-card">
             <div className="stat-icon cancelled">
-              <span className="icon">✕</span>
+              <FaTimesCircle />
             </div>
             <div className="stat-info">
               <h3>{stats.cancelled}</h3>
               <p>Cancelled Bookings</p>
             </div>
           </div>
+
           <div className="stat-card">
             <div className="stat-icon revenue">
-              <span className="icon">$</span>
+              <FaDollarSign />
             </div>
             <div className="stat-info">
               <h3>${stats.revenue}</h3>
@@ -275,6 +269,7 @@ const Bookings = () => {
           </div>
         </div>
 
+        {/* ✅ Table */}
         <CustomTable
           columns={columns}
           data={bookings}

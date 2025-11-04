@@ -11,6 +11,7 @@ import ViewBooking from "../bookings/ViewBooking";
 import Trips from "../trips/Trips";
 import TripForm from "../trips/TripForm";
 import TripDetail from "../trips/TripDetail";
+import Announcements from "../announcement/Announcements";
 
 function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
@@ -42,6 +43,7 @@ function Dashboard() {
             <Route path="/trips/new" element={<TripForm />} />
             <Route path="/trips/edit/:id" element={<TripForm />} />
             <Route path="/trips/:id" element={<TripDetail />} />
+            <Route path="/announcements" element={<Announcements />} />
 
             {/* Add more routes as needed */}
           </Routes>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getBookingById } from "../../services/admin";
 import "./ViewBooking.css";
+import Loader2 from "../../components/loader/Loader2";
 
 const ViewBooking = () => {
   const { id } = useParams();
@@ -78,7 +79,9 @@ const ViewBooking = () => {
   if (loading)
     return (
       <div className="view-booking-container">
-        <div className="loading">Loading booking details...</div>
+        <div className="loading">
+          <Loader2 />
+        </div>
       </div>
     );
 

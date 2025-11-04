@@ -9,7 +9,7 @@ import { loginUser } from "../../services/auth";
 function Login() {
   const [formData, setFormData] = useState({
     email: "adventuresafari@gmail.com",
-    password: "Adventure@123"
+    password: "Adventure@123",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(true);
@@ -18,26 +18,26 @@ function Login() {
   // Check if page assets are loaded
   useEffect(() => {
     const handleLoad = () => setIsPageLoading(false);
-    
-    if (document.readyState === 'complete') {
+
+    if (document.readyState === "complete") {
       setIsPageLoading(false);
     } else {
-      window.addEventListener('load', handleLoad);
-      return () => window.removeEventListener('load', handleLoad);
+      window.addEventListener("load", handleLoad);
+      return () => window.removeEventListener("load", handleLoad);
     }
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.email || !formData.password) {
       toast.error("Please fill in all fields");
       return;
@@ -51,7 +51,7 @@ function Login() {
 
       // Store the admin token in localStorage
       localStorage.setItem("adminToken", data.token);
-      
+
       // Optional: Store token expiry if provided by backend
       if (data.expiresIn) {
         const expiryDate = new Date(Date.now() + data.expiresIn * 1000);
@@ -65,7 +65,6 @@ function Login() {
 
       toast.success("Login successful!");
       navigate("/dashboard");
-
     } catch (err) {
       toast.error(err.message || "An unexpected error occurred");
     } finally {
@@ -76,8 +75,10 @@ function Login() {
   return (
     <>
       {isPageLoading && <Loader />}
-      
-      <div className={`login-container ${isPageLoading ? 'content-loading' : ''}`}>
+
+      <div
+        className={`login-container ${isPageLoading ? "content-loading" : ""}`}
+      >
         <div className="login-inner max-width">
           <div className="login-form">
             <h2>Admin Login</h2>
@@ -92,7 +93,6 @@ function Login() {
                   name="email"
                   placeholder="Your e-mail"
                   required
-                  value={formData.email}
                   onChange={handleChange}
                   className="login-input"
                 />
@@ -107,14 +107,13 @@ function Login() {
                   name="password"
                   placeholder="Enter password"
                   required
-                  value={formData.password}
                   onChange={handleChange}
                   className="login-input"
                 />
               </div>
               <div className="login-btn-group">
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={isLoading}
                   className={isLoading ? "login-loading" : ""}
                 >
